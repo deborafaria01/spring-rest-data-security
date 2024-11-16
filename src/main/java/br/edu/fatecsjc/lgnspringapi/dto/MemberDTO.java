@@ -20,4 +20,6 @@ public class MemberDTO {
     private Long id;
     private String name;
     private Integer age;
+    private Long groupId; 
+    private List<Long> marathonIds; 
 }

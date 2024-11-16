@@ -32,8 +32,17 @@ public class OrganizationService {
     }
 
     public OrganizationDTO save(Long id, OrganizationDTO body) {
-        Organization organization = convertToEntity(body);
-        organization.setId(id);
+        Organization organization = organizationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Organization not found with id: " + id));
+        organization.setName(body.getName());
+        organization.setInstitutionName(body.getInstitutionName());
+        organization.setCountry(body.getCountry());
+        organization.setStreet(body.getStreet());
+        organization.setNumber(body.getNumber());
+        organization.setNeighborhood(body.getNeighborhood());
+        organization.setZipCode(body.getZipCode());
+        organization.setCity(body.getCity());
+        organization.setState(body.getState());
         return convertToDTO(organizationRepository.save(organization));
     }
 

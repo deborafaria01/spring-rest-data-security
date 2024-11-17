@@ -26,6 +26,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Set up Docker
+        run: |
+          docker-compose -f docker-compose.yml up -d test-db
+          sleep 10 # Aguarda o banco de dados iniciar
+
       - name: Validate dependencies
         run: mvn validate
 
@@ -33,10 +38,14 @@ jobs:
         run: mvn install -DskipTests
 
       - name: Run Unit Tests
-        run: mvn test
+        run: mvn test -Dspring.profiles.active=test
 
       - name: Generate Jacoco Report
         run: mvn jacoco:report
+
+      - name: Tear down Docker
+        if: always()
+        run: docker-compose -f docker-compose.yml down
 
   sonar-analysis:
     needs: unit-test
@@ -89,6 +98,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Set up Docker
+        run: |
+          docker-compose -f docker-compose.yml up -d test-db
+          sleep 10 # Aguarda o banco de dados iniciar
+
       - name: Validate dependencies
         run: mvn validate
 
@@ -96,4 +110,8 @@ jobs:
         run: mvn install -DskipTests
 
       - name: Run System Tests
-        run: mvn verify
+        run: mvn verify -Dspring.profiles.active=test
+
+      - name: Tear down Docker
+        if: always()
+        run: docker-compose -f docker-compose.yml down

@@ -8,24 +8,40 @@ on:
 
 jobs:
   unit-test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
       - name: Install dependencies
-        run: mvn install
+        run: mvn install -DskipTests
       - name: Run Unit Tests
         run: mvn test
+      - name: Generate Jacoco Report
+        run: mvn jacoco:report
 
   sonar-analysis:
     needs: unit-test
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -35,23 +51,31 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn sonar:sonar \
-          -Dsonar.projectKey=deborafaria01_spring-rest-data-security \
-          -Dsonar.organization=deborafaria01 \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          mvn sonar:sonar ^
+            -Dsonar.projectKey=deborafaria01_spring-rest-data-security ^
+            -Dsonar.organization=deborafaria01 ^
+            -Dsonar.host.url=https://sonarcloud.io ^
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} ^
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
   system-test:
     needs: [unit-test, sonar-analysis]
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
       - name: Install dependencies
-        run: mvn install
+        run: mvn install -DskipTests
       - name: Run System Tests
         run: mvn verify

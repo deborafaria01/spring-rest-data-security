@@ -11,6 +11,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -18,15 +19,22 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Validate dependencies
+        run: mvn validate
+
       - name: Install dependencies
         run: mvn install -DskipTests
+
       - name: Run Unit Tests
         run: mvn test
+
       - name: Generate Jacoco Report
         run: mvn jacoco:report
 
@@ -35,6 +43,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -42,20 +51,22 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
+
       - name: Run SonarCloud Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn sonar:sonar ^
-            -Dsonar.projectKey=deborafaria01_spring-rest-data-security ^
-            -Dsonar.organization=deborafaria01 ^
-            -Dsonar.host.url=https://sonarcloud.io ^
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }} ^
+          mvn sonar:sonar \
+            -Dsonar.projectKey=deborafaria01_spring-rest-data-security \
+            -Dsonar.organization=deborafaria01 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
   system-test:
@@ -63,6 +74,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -70,12 +82,18 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Validate dependencies
+        run: mvn validate
+
       - name: Install dependencies
         run: mvn install -DskipTests
+
       - name: Run System Tests
         run: mvn verify

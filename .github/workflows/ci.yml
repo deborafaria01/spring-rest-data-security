@@ -66,7 +66,7 @@ jobs:
             -Dsonar.projectKey=deborafaria01_spring-rest-data-security \
             -Dsonar.organization=deborafaria01 \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
   system-test:

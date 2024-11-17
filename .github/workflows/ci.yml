@@ -28,7 +28,7 @@ jobs:
 
       - name: Set up Docker
         run: |
-          docker-compose -f docker-compose.yml up -d test-db
+          docker compose -f docker-compose.yml up -d test-db
           sleep 10 # Aguarda o banco de dados iniciar
 
       - name: Validate dependencies
@@ -45,7 +45,7 @@ jobs:
 
       - name: Tear down Docker
         if: always()
-        run: docker-compose -f docker-compose.yml down
+        run: docker compose -f docker-compose.yml down
 
   sonar-analysis:
     needs: unit-test
@@ -100,7 +100,7 @@ jobs:
 
       - name: Set up Docker
         run: |
-          docker-compose -f docker-compose.yml up -d test-db
+          docker compose -f docker-compose.yml up -d test-db
           sleep 10 # Aguarda o banco de dados iniciar
 
       - name: Validate dependencies
@@ -114,4 +114,5 @@ jobs:
 
       - name: Tear down Docker
         if: always()
-        run: docker-compose -f docker-compose.yml down
+        run: docker compose -f docker-compose.yml down
+

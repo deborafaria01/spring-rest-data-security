@@ -26,11 +26,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Docker Compose (if needed)
+      - name: Install Docker Compose
         run: |
           sudo apt-get update
           sudo apt-get install -y docker.io
-          sudo apt-get install -y docker-compose-plugin
+          sudo apt-get install -y docker-compose-plugin || echo "Plugin already installed"
           docker --version
           docker compose version
 

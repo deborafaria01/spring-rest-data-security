@@ -26,9 +26,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose-plugin
+
       - name: Start Docker container for test-db
         run: |
-          docker-compose -f docker-compose.yml up -d test-db
+          docker compose -f docker-compose.yml up -d test-db
           sleep 10
 
       - name: Validate dependencies
@@ -45,7 +50,7 @@ jobs:
 
       - name: Tear down Docker
         if: always()
-        run: docker-compose -f docker-compose.yml down
+        run: docker compose -f docker-compose.yml down
 
   sonar-analysis:
     needs: unit-test
@@ -98,9 +103,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose-plugin
+
       - name: Start Docker container for test-db
         run: |
-          docker-compose -f docker-compose.yml up -d test-db
+          docker compose -f docker-compose.yml up -d test-db
           sleep 10
 
       - name: Validate dependencies
@@ -114,4 +124,5 @@ jobs:
 
       - name: Tear down Docker
         if: always()
-        run: docker-compose -f docker-compose.yml down
+        run: docker compose -f docker-compose.yml down
+

@@ -162,11 +162,14 @@
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.9.1.2184</version>
                 <configuration>
-                <property>
+                    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+                    <sonar.projectKey>deborafaria01_spring-rest-data-security</sonar.projectKey>
+                    <sonar.organization>deborafaria01</sonar.organization>
                     <sonar.java.binaries>target/classes</sonar.java.binaries>
-                </property>
+                    <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 </project>
+

@@ -3,7 +3,6 @@ package br.edu.fatecsjc.lgnspringapi.resource;
 import br.edu.fatecsjc.lgnspringapi.entity.Marathon;
 import br.edu.fatecsjc.lgnspringapi.service.MarathonService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

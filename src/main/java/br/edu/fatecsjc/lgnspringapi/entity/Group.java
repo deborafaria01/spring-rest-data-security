@@ -2,9 +2,8 @@ package br.edu.fatecsjc.lgnspringapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,14 +18,9 @@ public class Group {
     @SequenceGenerator(initialValue = 1, allocationSize = 1, name = "groupsidgen", sequenceName = "groups_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groupsidgen")
     private Long id;
-    
-    private String name;
-    
-    @ManyToOne
-    @JoinColumn(name = "organization_id", nullable = false)
-    private Organization organization;
 
-    @OneToMany(mappedBy="group", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Member> members;
+    private String name;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Member> members; 
 }

@@ -5,9 +5,6 @@ import lombok.*;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Getter
 @Setter
 @ToString
@@ -18,15 +15,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "marathons")
 public class Marathon {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(initialValue = 1, allocationSize = 1, name = "marathonsidgen", sequenceName = "marathons_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "marathonsidgen")
     private Long id;
 
     private String name;
+
     private Double weight;
+
     private Double score;
 
     @ManyToMany(mappedBy = "marathons")
-    @JsonIgnore
-    @JsonBackReference
-    private List<Member> members;
+    private List<Member> members; 
 }

@@ -20,17 +20,18 @@ public class Member {
     private Long id;
 
     private String name;
+
     private Integer age;
 
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
-    private Group group;
+    private Group group; 
 
     @ManyToMany
     @JoinTable(
-        name = "member_marathons",
-        joinColumns = @JoinColumn(name = "member_id"),
-        inverseJoinColumns = @JoinColumn(name = "marathon_id")
+            name = "member_marathons",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "marathon_id")
     )
-    private List<Marathon> marathons;
+    private List<Marathon> marathons; 
 }

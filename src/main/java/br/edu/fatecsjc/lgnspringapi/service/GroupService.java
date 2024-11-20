@@ -3,7 +3,6 @@ package br.edu.fatecsjc.lgnspringapi.service;
 import br.edu.fatecsjc.lgnspringapi.converter.GroupConverter;
 import br.edu.fatecsjc.lgnspringapi.dto.GroupDTO;
 import br.edu.fatecsjc.lgnspringapi.entity.Group;
-import br.edu.fatecsjc.lgnspringapi.entity.Member;
 import br.edu.fatecsjc.lgnspringapi.repository.GroupRepository;
 import br.edu.fatecsjc.lgnspringapi.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -51,5 +51,17 @@ public class GroupService {
 
     public void delete(Long id) {
         groupRepository.deleteById(id);
+    }
+
+    public List<GroupDTO> findAll() { 
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    public Optional<GroupDTO> update(long l, GroupDTO groupDTO) {
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    public boolean deleteById(long l) {
+        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
     }
 }

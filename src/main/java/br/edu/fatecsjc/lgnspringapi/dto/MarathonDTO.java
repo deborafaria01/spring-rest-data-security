@@ -9,27 +9,23 @@ import lombok.NoArgsConstructor;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MemberDTO {
+public class MarathonDTO {
 
     @Schema(hidden = true)
     private Long id;
 
-    @NotBlank(message = "Name cannot be blank")
+    @NotBlank(message = "Marathon name cannot be blank")
     private String name;
 
-    @NotNull(message = "Age is required")
-    @Min(value = 1, message = "Age must be positive")
-    private Integer age;
+    @Min(value = 0, message = "Weight must be non-negative")
+    private double weight;
 
-    private Long groupId;
-
-    private List<MarathonDTO> marathons;
+    @Min(value = 0, message = "Score must be non-negative")
+    private double score;
 }

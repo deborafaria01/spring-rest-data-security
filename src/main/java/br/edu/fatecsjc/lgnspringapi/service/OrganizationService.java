@@ -77,4 +77,8 @@ public class OrganizationService {
                 .state(dto.getState())
                 .build();
     }
+
+    public Object findAll() {
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
 }

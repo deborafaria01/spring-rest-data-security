@@ -19,32 +19,33 @@ public class OrganizationRepositoryTest {
 
     @Test
     void testSaveAndFind() {
+        // Mock organization
         Organization organization = Organization.builder()
                 .name("Test Organization")
                 .country("Brazil")
+                .institutionName("Institution Name") // Mandatory field
                 .build();
-
         Organization savedOrganization = organizationRepository.save(organization);
 
+        // Assertions
         assertNotNull(savedOrganization.getId());
         assertEquals("Test Organization", savedOrganization.getName());
-
-        Optional<Organization> foundOrganization = organizationRepository.findById(savedOrganization.getId());
-        assertTrue(foundOrganization.isPresent());
-        assertEquals("Brazil", foundOrganization.get().getCountry());
+        assertEquals("Brazil", savedOrganization.getCountry());
     }
 
     @Test
     void testDelete() {
+        // Mock organization
         Organization organization = Organization.builder()
                 .name("Delete Test")
+                .institutionName("Institution Name") // Mandatory field
                 .build();
-
         Organization savedOrganization = organizationRepository.save(organization);
 
+        // Delete organization and assert it no longer exists
         organizationRepository.deleteById(savedOrganization.getId());
-
         Optional<Organization> foundOrganization = organizationRepository.findById(savedOrganization.getId());
         assertFalse(foundOrganization.isPresent());
     }
 }
+

@@ -23,8 +23,9 @@ public class Member {
 
     private Integer age;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
+    @ToString.Exclude
     private Group group; 
 
     @ManyToMany

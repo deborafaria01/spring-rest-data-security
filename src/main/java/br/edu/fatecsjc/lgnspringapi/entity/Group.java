@@ -22,5 +22,11 @@ public class Group {
     private String name;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Member> members; 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id", nullable = false)
+    @ToString.Exclude
+    private Organization organization;
 }

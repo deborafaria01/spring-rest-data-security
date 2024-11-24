@@ -2,6 +2,7 @@ package br.edu.fatecsjc.lgnspringapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.List;
 
 @Getter
@@ -18,8 +19,12 @@ public class Organization {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organizationsidgen")
     private Long id;
 
+    @Column(nullable = false) // The name of the organization cannot be null
     private String name;
+
+    @Column(nullable = false) // Ensures the institution name is mandatory
     private String institutionName;
+
     private String country;
 
     // Address composition fields
@@ -30,7 +35,7 @@ public class Organization {
     private String city;
     private String state;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "organization_id")
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Group> groups;
 }

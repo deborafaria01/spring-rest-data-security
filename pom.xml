@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>br.edu.fatecsjc</groupId>
     <artifactId>lgn-spring-api</artifactId>
@@ -171,5 +171,27 @@
             </plugin>
         </plugins>
     </build>
-</project>
 
+    <profiles>
+        <profile>
+            <id>test-db-repair</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>9.16.3</version>
+                        <configuration>
+                            <url>jdbc:mariadb://localhost:3308/test_sample</url>
+                            <user>testuser</user>
+                            <password>testpassword</password>
+                            <schemas>
+                                <schema>test_sample</schema>
+                            </schemas>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
